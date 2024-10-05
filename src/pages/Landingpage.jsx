@@ -21,7 +21,9 @@ export default function ProfileComponent() {
     if (userId) {
       // Fetch user details using the user ID
       axios
-        .get(`job-platform-api-1.onrender.com/backendAPI/users/${userId}/`)
+        .get(
+          `https://job-platform-api-1.onrender.com/backendAPI/users/${userId}/`
+        )
         .then((response) => {
           // Log the full response to ensure the structure is correct
           console.log(response);

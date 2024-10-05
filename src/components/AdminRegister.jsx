@@ -23,7 +23,7 @@ const RegisterAdmin = ({ onAddMember, onClose }) => {
 
     try {
       const response = await axios.post(
-        "job-platform-api-1.onrender.com/backendAPI/registerAdmin/",
+        "https://job-platform-api-1.onrender.com/backendAPI/registerAdmin/",
         formData
       );
       alert("Admin user registered successfully!");

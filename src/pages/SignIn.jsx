@@ -15,7 +15,7 @@ export default function SignIn() {
     e.preventDefault(); // Prevent form submission
 
     axios
-      .post("job-platform-api-1.onrender.com/backendAPI/login/", {
+      .post("https://job-platform-api-1.onrender.com/backendAPI/login/", {
         username: username,
         password: password,
       })

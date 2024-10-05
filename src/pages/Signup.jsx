@@ -139,7 +139,7 @@ export default function Signup() {
 
       // Axios POST request to the Django backend
       const response = await axios.post(
-        "job-platform-api-1.onrender.com/backendAPI/users/",
+        "https://job-platform-api-1.onrender.com/backendAPI/users/",
         payload, // Send the payload as is, no need to stringify
         {
           headers: {

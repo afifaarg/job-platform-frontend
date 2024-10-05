@@ -10,7 +10,7 @@ export default function NavBar() {
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refresh");
     axios
-      .post("job-platform-api-1.onrender.com/backendAPI/logout/", {
+      .post("https://job-platform-api-1.onrender.com/backendAPI/logout/", {
         refresh_token: refreshToken,
       })
       .then(() => {

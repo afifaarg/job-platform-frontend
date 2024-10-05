@@ -8,7 +8,7 @@ import SignIn from "./pages/SignIn";
 import Signup from "./pages/Signup";
 import ProfileComponent from "./pages/Landingpage";
 import { Privateroute } from "./components/Privateroute";
-import AdminDashboard from "./pages/adminDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import comingSoon from "./pages/Comingsoon";
 function App() {
   return (

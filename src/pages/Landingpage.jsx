@@ -109,7 +109,7 @@ export default function ProfileComponent() {
 
       // Make the PATCH request to update the user
       const response = await axios.patch(
-        `http://127.0.0.1:8000/backendAPI/users/${id}/`, // Replace with your actual backend API URL
+        `https://job-platform-api-1.onrender.com/backendAPI/users/${id}/`, // Replace with your actual backend API URL
         data,
         {
           headers: {

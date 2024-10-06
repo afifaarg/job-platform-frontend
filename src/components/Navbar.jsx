@@ -23,7 +23,7 @@ export default function NavBar() {
         navigate("/"); // Redirect to the home page
       })
       .catch((error) => {
-        console.error("Logout error:", error); // Log any errors
+        alert("Logout error:", error); // Log any errors
       });
   };
 

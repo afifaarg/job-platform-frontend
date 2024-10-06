@@ -29,7 +29,6 @@ export default function SignIn() {
           const userData = response.data.user_data; // Extract user data from response
 
           if (userData) {
-            console.log(userData);
             // Save user ID and tokens to localStorage
             localStorage.setItem("userID", userData.id);
             localStorage.setItem("access", response.data.access);
@@ -37,7 +36,6 @@ export default function SignIn() {
 
             // Check user role to navigate accordingly
             if (userData.role === "admin") {
-              console.log(response.data);
               localStorage.setItem("userRole", "admin");
               localStorage.setItem(
                 "allUsers",
@@ -49,7 +47,7 @@ export default function SignIn() {
               navigate("/Landed"); // Navigate to the regular user landing page
             }
           } else {
-            console.error("User data is undefined"); // Handle case where user data is not defined
+            alert("User data is undefined"); // Handle case where user data is not defined
           }
         }
       })

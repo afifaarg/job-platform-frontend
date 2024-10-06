@@ -25,8 +25,6 @@ export default function ProfileComponent() {
         )
         .then((response) => {
           // Log the full response to ensure the structure is correct
-          console.log(response);
-
           // Access the data from the response
           const userData = response.data;
 
@@ -65,10 +63,10 @@ export default function ProfileComponent() {
           localStorage.setItem("userData", JSON.stringify(manipulableJson));
         })
         .catch((error) => {
-          console.error("Failed to fetch user data:", error);
+          alert("Failed to fetch user data:", error);
         });
     } else {
-      console.log("No user ID found in localStorage");
+      alert("No user ID found in localStorage");
     }
   }, []);
 
@@ -95,12 +93,12 @@ export default function ProfileComponent() {
   const updateUser = async (id, data) => {
     try {
       // Logging data being sent
-      console.log("Data to update:", data);
+      alert("Data to update:", data);
 
       // Retrieve the access token from localStorage
       const accessToken = localStorage.getItem("access");
       if (!accessToken) {
-        console.error("Access token not found. Redirecting to login.");
+        alert("Access token not found. Redirecting to login.");
         // Handle token absence, maybe redirect to login
         return;
       }
@@ -125,9 +123,9 @@ export default function ProfileComponent() {
     } catch (error) {
       // Check if error has a response from the server
       if (error.response) {
-        console.error("Error updating user:", error.response.data);
+        alert("Error updating user:", error.response.data);
       } else {
-        console.error("Error updating user:", error.message);
+        alert("Error updating user:", error.message);
       }
     }
   };
@@ -158,7 +156,6 @@ export default function ProfileComponent() {
   };
 
   const handleEducationChange = (index, value) => {
-    console.log(formData.educations);
     const updatedEducations = [...formData.educations];
 
     updatedEducations[index] = value; // Update the specific entry

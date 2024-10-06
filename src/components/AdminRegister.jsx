@@ -70,7 +70,6 @@ export default function RegisterAdmin({ onAddMember, onClose }) {
         password: "",
       });
     } catch (error) {
-      console.error(error);
       alert("Failed to register admin user. Please try again.");
     }
   };

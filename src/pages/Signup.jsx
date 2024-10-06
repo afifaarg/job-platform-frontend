@@ -135,9 +135,6 @@ export default function Signup() {
         })), // Ensure experiences is an array of objects with correct fields
       };
 
-      // Log the payload for debugging
-      console.log("Payload to be sent:", payload);
-
       // Axios POST request to the Django backend
       const response = await axios.post(
         "https://job-platform-api-1.onrender.com/backendAPI/users/",
@@ -151,10 +148,9 @@ export default function Signup() {
 
       // Handle success
       if (response.status === 201) {
-        console.log("Signup successful!");
         setDisplayThankyou(true);
       } else {
-        console.log("Error submitting form:", response.status, response.data);
+        alert("Error submitting form:", response.status, response.data);
       }
     } catch (error) {
       // Detailed error handling
@@ -360,17 +356,6 @@ export default function Signup() {
                   >
                     {stepNumber === 7 ? "Submit" : "Next Step"}
                   </button>
-
-                  {/* Display error message if login info is empty or passwords do not match */}
-                  {isLoginInfoEmpty && (
-                    <p className="text-red-500">
-                      {Object.values(loginInfomations).some(
-                        (value) => value.length === 0
-                      )
-                        ? "Please fill in all fields."
-                        : "Passwords do not match."}
-                    </p>
-                  )}
                 </div>
               </div>
               <div className="mt-5 text-center">

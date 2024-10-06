@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import Signup from "./pages/Signup";
-import ProfileComponent from "./pages/Landingpage";
+import ProfileComponent from "./pages/ProfilePage";
 import { Privateroute } from "./components/Privateroute";
 import AdminDashboard from "./pages/AdminDashboard";
 import comingSoon from "./pages/Comingsoon";
@@ -28,7 +28,9 @@ function App() {
           />
           <Route
             path="/adminDashboard"
-            element={<Privateroute element={AdminDashboard} />}
+            element={
+              <Privateroute element={AdminDashboard} requiredRole="admin" />
+            }
           />
         </Routes>
       </BrowserRouter>

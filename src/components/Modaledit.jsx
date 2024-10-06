@@ -3,6 +3,24 @@ import Education from "./Education";
 import Skills from "./Skills";
 import Experience from "./Experience";
 import FormField from "./FormField";
+
+/**
+ * ModalEdit component is used for editing user profile information.
+ * It displays a modal dialog with different sections for personal info, additional info, skills, experience, and education.
+ *
+ * Props:
+ * @param {boolean} show - Determines whether the modal is visible or not.
+ * @param {function} handleClose - Function to handle closing the modal.
+ * @param {object} formData - Contains the current form data for the user profile.
+ * @param {function} handleChange - Function to handle changes in the form fields.
+ * @param {function} handleSubmit - Function to handle form submission.
+ * @param {string} section - Specifies which section of the form is currently being edited.
+ * @param {function} handleSkillChange - Function to handle changes in the skills section.
+ * @param {function} handleExperienceChange - Function to handle changes in the experience section.
+ * @param {function} handleEducationChange - Function to handle changes in the education section.
+ *
+ * @returns {JSX.Element|null} - Returns the modal dialog if `show` is true; otherwise, returns null.
+ */
 export default function ModalEdit({
   show,
   handleClose,
@@ -14,9 +32,10 @@ export default function ModalEdit({
   handleExperienceChange,
   handleEducationChange,
 }) {
+  // Return null if the modal should not be shown
   if (!show) return null;
 
-  // Functions to add or remove education
+  // Functions to add or remove education entries
   const addEducation = () => {
     const newEducation = [
       ...formData.educations,
@@ -30,12 +49,13 @@ export default function ModalEdit({
     handleChange({ target: { name: "educations", value: newEducation } });
   };
 
+  // Function to remove a skill
   const removeSkill = (index) => {
     const newSkill = formData.skills.filter((_, i) => i !== index);
     handleChange({ target: { name: "skills", value: newSkill } });
   };
 
-  // Functions to add or remove experience
+  // Functions to add or remove experience entries
   const addExperience = () => {
     const newExperience = [
       ...formData.experiences,
@@ -99,21 +119,6 @@ export default function ModalEdit({
                   onChange={(e) =>
                     handleChange({
                       target: { name: "resume", value: e.target.files[0] },
-                    })
-                  }
-                  type="file"
-                  placeholder="Upload Resume"
-                />
-                <FormField
-                  label="Resume file"
-                  name="resume"
-                  value={formData.resume}
-                  onChangeYourInfo={(e) =>
-                    handleChange({
-                      target: {
-                        name: "resume",
-                        value: e.target.files[0],
-                      },
                     })
                   }
                   type="file"

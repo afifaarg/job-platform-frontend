@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import RegisterAdmin from "./AdminRegister";
-import ProfileComponent from "../pages/Landingpage"; // Import your ProfileComponent
+import ProfileComponent from "../pages/ProfilePage";
+
+/**
+ * MembersTable Component
+ * This component displays a list of members, allows searching, filtering by role (Admin/Employee),
+ * and pagination. Users can add new members through a modal, and view individual member profiles.
+ */
 
 const TABS = [
   { label: "All", value: "all" },
@@ -18,7 +24,7 @@ const TABLE_HEAD = [
   "Joined Date",
   "Experience",
   "Unique ID",
-  "Profile", // Add a new header for the Profile button
+  "Profile",
 ];
 
 export default function MembersTable() {
@@ -38,7 +44,7 @@ export default function MembersTable() {
   });
 
   const [members, setMembers] = useState([]);
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedMembers = JSON.parse(localStorage.getItem("allUsers")) || [];
@@ -53,6 +59,11 @@ export default function MembersTable() {
   };
 
   const handleAddMember = () => {
+    if (!newMember.username || !newMember.name) {
+      alert("Username and Name are required.");
+      return;
+    }
+
     const updatedMembers = [...members, { ...newMember }];
     setMembers(updatedMembers);
     localStorage.setItem("allUsers", JSON.stringify(updatedMembers));
@@ -91,7 +102,7 @@ export default function MembersTable() {
 
   const handleViewProfile = (userId) => {
     localStorage.setItem("userID", userId);
-    navigate("/Profile"); // Use navigate to change the route
+    navigate("/Profile");
   };
 
   return (
@@ -186,19 +197,23 @@ export default function MembersTable() {
                   {row.uniqueID}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  <button
-                    className="text-blue-500 bg-gray-100 hover:bg-gray-200 rounded-full px-2 py-2 "
-                    onClick={() => handleViewProfile(row.id)} // Call the view profile function with uniqueID
-                  >
-                    <svg
-                      viewBox="0 0 1024 1024"
-                      fill="currentColor"
-                      height="1.5em"
-                      width="1.5em"
+                  {row.role !== "admin" ? (
+                    <button
+                      className="text-blue-500 bg-gray-100 hover:bg-gray-200 rounded-full px-2 py-2"
+                      onClick={() => handleViewProfile(row.id)}
                     >
-                      <path d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656zM492 400h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H492c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8zm0 144h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H492c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8zm0 144h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H492c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8zM340 368a40 40 0 1080 0 40 40 0 10-80 0zm0 144a40 40 0 1080 0 40 40 0 10-80 0zm0 144a40 40 0 1080 0 40 40 0 10-80 0z" />
-                    </svg>
-                  </button>
+                      <svg
+                        viewBox="0 0 1024 1024"
+                        fill="currentColor"
+                        height="1.5em"
+                        width="1.5em"
+                      >
+                        <path d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656zM492 400h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H492c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8zm0 144h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H492c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8zm0 144h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H492c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8zM340 368a40 40 0 1080 0 40 40 0 10-80 0zm0 144a40 40 0 1080 0 40 40 0 10-80 0zm0 144a40 40 0 1080 0 40 40 0 10-80 0z" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <p className="text-gray-400">Admin</p>
+                  )}
                 </td>
               </tr>
             ))}
@@ -207,11 +222,9 @@ export default function MembersTable() {
       </div>
       <div className="flex justify-between items-center p-4">
         <button
-          className={`py-2 px-4 rounded-lg ${
-            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
+          className="bg-gray-300 text-gray-600 px-4 py-2 rounded-lg"
         >
           Previous
         </button>
@@ -219,11 +232,9 @@ export default function MembersTable() {
           Page {currentPage} of {totalPages}
         </span>
         <button
-          className={`py-2 px-4 rounded-lg ${
-            currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
-          }`}
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
+          className="bg-gray-300 text-gray-600 px-4 py-2 rounded-lg"
         >
           Next
         </button>

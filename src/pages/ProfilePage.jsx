@@ -4,7 +4,6 @@ import Modaledit from "../components/Modaledit";
 import axios from "axios";
 export default function ProfileComponent() {
   const [manipulableJson, setManipulableJson] = useState(null);
-
   const [showModal, setShowModal] = useState(false);
   const [currentSection, setCurrentSection] = useState("");
   const [formData, setFormData] = useState({});
@@ -77,7 +76,6 @@ export default function ProfileComponent() {
   const handleChange = (e) => {
     // Update the formData state with the new changes
     const { name, type, files } = e.target;
-
     if (type === "file") {
       // If the input is a file, set the file
       setFormData({

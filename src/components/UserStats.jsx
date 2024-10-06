@@ -27,24 +27,40 @@ ChartJS.register(
   Legend
 );
 
-const Statistics = () => {
+/**
+ * Statistics Component
+ *
+ * This component displays user statistics using various chart types
+ * such as Bar, Line, and Pie charts. It retrieves user data from
+ * localStorage, processes it, and visualizes the following statistics:
+ * - Users by Country
+ * - Users by Gender
+ * - Users by Years of Experience
+ * - Users by Join Date
+ *
+ * @returns {JSX.Element} The rendered Statistics component.
+ */
+export default function Statistics() {
   const countries = {};
   const genders = {};
   const joinedDates = {};
   const experienceYears = {};
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState([]); // State to hold member data.
 
   useEffect(() => {
     // Retrieve members from localStorage
     const storedMembers = JSON.parse(localStorage.getItem("allUsers")) || [];
-    setMembers(storedMembers);
-  }, []);
+    setMembers(storedMembers); // Set the members state with the retrieved data.
+  }, []); // Effect runs once on component mount.
+
+  // Process members to categorize statistics.
   members.forEach((user) => {
     if (user.country) {
       countries[user.country] = (countries[user.country] || 0) + 1;
     }
     if (user.gender) {
-      genders[user.gender] = (genders[user.gender] || 0) + 1;
+      genders[user.gender.toLowerCase()] =
+        (genders[user.gender.toLowerCase()] || 0) + 1; // Fix: Change 'user.gender.toLower()' to 'user.gender.toLowerCase()'
     }
     const date = user.joinedDate ? user.joinedDate.split("T")[0] : null;
     if (date) {
@@ -56,6 +72,7 @@ const Statistics = () => {
     }
   });
 
+  // Prepare chart data for each statistic.
   const countryData = {
     labels: Object.keys(countries),
     datasets: [
@@ -100,6 +117,7 @@ const Statistics = () => {
     ],
   };
 
+  // Chart options configuration.
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -144,6 +162,4 @@ const Statistics = () => {
       </div>
     </div>
   );
-};
-
-export default Statistics;
+}

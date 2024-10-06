@@ -2,6 +2,15 @@ import React, { useEffect, useState } from "react";
 import FormField from "./FormField";
 import SectionHeading from "./SectionHeading";
 
+/**
+ * ProfessionalInfo component to collect professional details through a form.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.yourInfo - The object containing the user's information.
+ * @param {function} props.onChangeYourInfo - The function to handle changes to the user's information.
+ * @param {boolean} props.isEmpty - Flag to indicate if the form is empty.
+ * @returns {JSX.Element} The rendered form for professional information.
+ */
 export default function ProfessionalInfo({
   yourInfo,
   onChangeYourInfo,
@@ -16,28 +25,28 @@ export default function ProfessionalInfo({
       placeholder: "e.g https://github.com/yourusername",
     },
     {
-      id: 1,
+      id: 2, // Changed id to be unique for each field
       name: "linkedin_link",
       type: "url",
       label: "LinkedIn Link",
       placeholder: "e.g https://linkedin.com/in/yourprofile",
     },
     {
-      id: 2,
+      id: 3,
       name: "portfolio_link",
       type: "url",
       label: "Portfolio Link",
       placeholder: "e.g https://yourportfolio.com",
     },
     {
-      id: 3,
+      id: 4,
       name: "resume_file",
       type: "file",
       label: "Resume File",
       placeholder: "Upload your resume",
     },
     {
-      id: 4,
+      id: 5, // Changed id to be unique for each field
       name: "proficiency",
       type: "text",
       label: "Proficiency",
@@ -48,7 +57,7 @@ export default function ProfessionalInfo({
   return (
     <div>
       <SectionHeading
-        title="General Informations"
+        title="Professional Information"
         desc="Please fill in the below form."
       />
       <form>

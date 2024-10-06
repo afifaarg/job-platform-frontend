@@ -15,6 +15,7 @@ export default function Signup() {
   // States
   const [stepNumber, setStepNumber] = useState(1);
   const [goBackVisible, setGoBackVisible] = useState("invisible");
+
   const [steps, setSteps] = useState([
     { id: 1, title: "General Informations", active: true },
     { id: 2, title: "Personal Informations", active: true },
@@ -210,8 +211,9 @@ export default function Signup() {
     setIsExperiencesEmpty(false);
 
     if (
-      stepNumber === 7 &&
-      Object.values(loginInfomations).some((value) => value.length === 0)
+      (stepNumber === 7 &&
+        Object.values(loginInfomations).some((value) => value.length === 0)) ||
+      loginInfomations.password !== loginInfomations.confirm_password // Check if passwords match
     ) {
       setIsLoginInfoEmpty(true);
       return;
@@ -350,12 +352,26 @@ export default function Signup() {
                 >
                   Go Back
                 </button>
-                <button
-                  className="bg-primary hover:bg-primary-light text-white px-5 py-3 rounded-md"
-                  onClick={nextStep}
-                >
-                  {stepNumber === 6 ? "Submit" : "Next Step"}
-                </button>
+                <div className="flex flex-col">
+                  <button
+                    className="bg-primary hover:bg-primary-light text-white px-5 py-3 rounded-md"
+                    onClick={nextStep} // Use the new handleNextStep function
+                    disabled={isLoginInfoEmpty} // Disable button if login info is empty or passwords do not match
+                  >
+                    {stepNumber === 7 ? "Submit" : "Next Step"}
+                  </button>
+
+                  {/* Display error message if login info is empty or passwords do not match */}
+                  {isLoginInfoEmpty && (
+                    <p className="text-red-500">
+                      {Object.values(loginInfomations).some(
+                        (value) => value.length === 0
+                      )
+                        ? "Please fill in all fields."
+                        : "Passwords do not match."}
+                    </p>
+                  )}
+                </div>
               </div>
               <div className="mt-5 text-center">
                 <p className="text-black ">

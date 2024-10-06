@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import FormField from "./FormField";
 import SectionHeading from "./SectionHeading";
 
+/**
+ * Experience component allows users to input and manage their work experience.
+ * It renders a form that can dynamically add or remove experience entries.
+ * Each experience entry includes fields for job title, company, location, start date, end date, responsibilities,
+ * and a checkbox to indicate if the user is currently working at the job.
+ * The component syncs with the parent component's state through the `onChangeExperienceInfo` callback.
+ */
 export default function Experience({
   experiences,
   onChangeExperienceInfo,
@@ -16,6 +23,7 @@ export default function Experience({
     setExperienceForms(experiences);
   }, [experiences]);
 
+  // Function to add a new experience form to the list
   const addExperienceForm = () => {
     const newForm = {
       job_title: "",
@@ -31,12 +39,14 @@ export default function Experience({
     onChangeExperienceInfo(updatedForms); // Update parent state
   };
 
+  // Function to remove an experience form from the list
   const removeExperienceForm = (index) => {
     const updatedForms = experienceForms.filter((_, i) => i !== index);
     setExperienceForms(updatedForms);
     onChangeExperienceInfo(updatedForms); // Update parent state
   };
 
+  // Function to handle changes in the experience form fields
   const handleExperienceChange = (index, e) => {
     const { name, value, type, checked } = e.target;
     const updatedForms = [...experienceForms];

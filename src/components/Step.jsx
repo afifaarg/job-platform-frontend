@@ -19,32 +19,30 @@ export default function Step({ number, title, active }) {
 
   useEffect(() => {
     if (active) {
-      setBg("bg-[#adbeff]"); // Set background color if the step is active.
+      setBg("bg-[#000066] text-white"); // Set background and text color if the step is active.
     } else {
-      setBg(""); // Reset background color if the step is not active.
+      setBg("text-[#4F566A]"); // Inactive text color.
     }
-  }, [active]); // Effect runs when the 'active' prop changes.
+  }, [active]);
 
   return (
     <div
-      className={`flex items-center text-left space-x-4 text-white mx-4 ${
+      className={`flex text-[#000066]  items-center space-x-4 px-3 py-1  ${
         active
-          ? "sm:border-b  border-[#adbeff]" // Border color for active step.
-          : "sm:border-b border-[#d6d9e6]" // Border color for inactive step.
-      } p-2`}
+          ? " bg-[#000066] cursor-pointer text-white rounded-lg"
+          : "text-black rounded-lg hover:bg-gray-100"
+      }`} // Rounded background for the active step.
     >
       <div
-        className={`font-bold text-center p-2 w-10 h-10 rounded-full ${
-          active ? "bg-[#adbeff]" : "" // Background color for the number circle.
-        }`}
+        className={`font-bold text-center w-8 h-8 flex items-center justify-center rounded-full text-[#000066] ${
+          active ? "bg-[#E5E7EB] " : "bg-[#F3F4F6] "
+        }`} // Number circle styling for active and inactive states.
       >
-        {number} {/* Display the step number. */}
+        {number}
       </div>
-      <div className="hidden md:block">
-        {" "}
-        {/* Only display title on medium screens and larger. */}
-        <div className="font-bold text-white">{title}</div>{" "}
-        {/* Display the step title. */}
+      <div className="text-sm font-medium ">
+        <span className={`cursor-default ${bg}`}>{title}</span>{" "}
+        {/* Step title */}
       </div>
     </div>
   );

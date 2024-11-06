@@ -15,30 +15,11 @@ export default function PersonalInfo({ yourInfo, onChangeYourInfo, isEmpty }) {
   // Define the form fields to be rendered
   const [formFields] = useState([
     {
-      id: 1,
-      name: "gender",
-      type: "select", // Select input for gender
-      label: "Gender",
-      options: [
-        { value: "", label: "Select Gender" },
-        { value: "male", label: "Male" },
-        { value: "female", label: "Female" },
-        { value: "other", label: "Other" },
-      ],
-    },
-    {
       id: 2,
       name: "birth_Date",
       type: "date", // Date input for birth date
       label: "Birth Date",
       placeholder: "Select your birth date",
-    },
-    {
-      id: 3,
-      name: "description",
-      type: "long", // Long text input for description
-      label: "Description",
-      placeholder: "Describe yourself",
     },
   ]);
 

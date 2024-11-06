@@ -17,12 +17,12 @@ export default function Signup() {
   const [goBackVisible, setGoBackVisible] = useState("invisible");
 
   const [steps, setSteps] = useState([
-    { id: 1, title: "General Informations", active: true },
-    { id: 2, title: "Personal Informations", active: true },
-    { id: 3, title: "Professional Informations", active: true },
-    { id: 4, title: "Skills", active: false },
-    { id: 5, title: "Education", active: false },
-    { id: 6, title: "Experience", active: false },
+    { id: 1, title: "General Info", active: true },
+    { id: 2, title: "Education", active: false },
+    { id: 3, title: "Skills", active: false },
+    { id: 4, title: "Experience", active: false },
+    { id: 5, title: "Projects", active: false },
+    { id: 6, title: "Extra Info", active: false },
     { id: 7, title: "Login Informations", active: false },
   ]);
 
@@ -31,17 +31,27 @@ export default function Signup() {
     name: "",
     email: "",
     phone: "",
-    country: "",
-    city: "",
-  });
-
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [yourPersonalInfo, setYourPersonalInfo] = useState({
+    currentAddress: "",
+    currentAddress1: "",
+    currentAddress2: "",
+    countryC: "",
+    cityC: "",
+    stateC: "",
+    pinCodeC: "",
+    permanentAddress: "",
+    permanentAddress1: "",
+    permanentAddress2: "",
+    countryP: "",
+    pinCodeP: "",
+    cityP: "",
+    stateP: "",
     profile_pic: "",
     gender: "",
     birth_Date: "",
-    description: "",
   });
+
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [yourPersonalInfo, setYourPersonalInfo] = useState({});
 
   const [professionalInfo, setProfessionalInfo] = useState({
     github_link: "",
@@ -78,6 +88,7 @@ export default function Signup() {
       responsibilities: "",
     },
   ]);
+
   const [isExperiencesEmpty, setIsExperiencesEmpty] = useState(false);
 
   const [loginInfomations, setloginInfomations] = useState({
@@ -89,7 +100,6 @@ export default function Signup() {
 
   const [displayThankyou, setDisplayThankyou] = useState(false);
 
-  // Side Effects
   useEffect(() => {
     setSteps((prevSteps) =>
       prevSteps.map((step) => ({ ...step, active: step.id === stepNumber }))
@@ -171,51 +181,51 @@ export default function Signup() {
   };
 
   const nextStep = () => {
-    if (
-      stepNumber === 1 &&
-      Object.values(yourInfo).some((value) => value.length === 0)
-    ) {
-      setIsEmpty(true);
-      return;
-    }
-    setIsEmpty(false);
+    // if (
+    //   stepNumber === 1 &&
+    //   Object.values(yourInfo).some((value) => value.length === 0)
+    // ) {
+    //   // setIsEmpty(true);
+    //   return;
+    // }
+    // setIsEmpty(false);
 
-    if (stepNumber === 2 && yourPersonalInfo.length === 0) {
-      setIsSkillsEmpty(true);
-      return;
-    }
-    if (stepNumber === 3 && professionalInfo.length === 0) {
-      setIsSkillsEmpty(true);
-      return;
-    }
-    if (stepNumber === 4 && skills.length === 0) {
-      setIsSkillsEmpty(true);
-      return;
-    }
-    setIsSkillsEmpty(false);
+    // if (stepNumber === 2 && yourPersonalInfo.length === 0) {
+    //   setIsSkillsEmpty(true);
+    //   return;
+    // }
+    // if (stepNumber === 3 && professionalInfo.length === 0) {
+    //   setIsSkillsEmpty(true);
+    //   return;
+    // }
+    // if (stepNumber === 4 && skills.length === 0) {
+    //   setIsSkillsEmpty(true);
+    //   return;
+    // }
+    // setIsSkillsEmpty(false);
 
-    if (stepNumber === 5 && educations.length === 0) {
-      setIsEducationsEmpty(true);
-      return;
-    }
-    setIsEducationsEmpty(false);
+    // if (stepNumber === 5 && educations.length === 0) {
+    //   setIsEducationsEmpty(true);
+    //   return;
+    // }
+    // setIsEducationsEmpty(false);
 
-    if (stepNumber === 6 && experiences.length === 0) {
-      setIsExperiencesEmpty(true);
-      return;
-    }
-    setIsExperiencesEmpty(false);
+    // if (stepNumber === 6 && experiences.length === 0) {
+    //   setIsExperiencesEmpty(true);
+    //   return;
+    // }
+    // setIsExperiencesEmpty(false);
 
-    if (
-      (stepNumber === 7 &&
-        Object.values(loginInfomations).some((value) => value.length === 0)) ||
-      loginInfomations.password !== loginInfomations.confirm_password // Check if passwords match
-    ) {
-      setIsLoginInfoEmpty(true);
-      return;
-    }
-    setIsLoginInfoEmpty(false);
-
+    // if (
+    //   (stepNumber === 7 &&
+    //     Object.values(loginInfomations).some((value) => value.length === 0)) ||
+    //   loginInfomations.password !== loginInfomations.confirm_password // Check if passwords match
+    // ) {
+    //   setIsLoginInfoEmpty(true);
+    //   return;
+    // }
+    // setIsLoginInfoEmpty(false);
+    console.log(stepNumber);
     // Submit form on the last step
     if (stepNumber === 7) {
       submitForm();
@@ -259,19 +269,34 @@ export default function Signup() {
   };
 
   return (
-    <div className="container mx-auto">
-      <div className="rounded-xl p-0 md:p-3 flex flex-col md:flex-row justify-center min-h-screen max-w-6xl mx-auto">
+    <div className="container my-4 mx-auto shadow-lg rounded-xl">
+      <div className="rounded-xl p-0 md:p-3 flex flex-col md:flex-row justify-between ">
         {/* Sidebar with Steps */}
-        <div className="bg-primary grid grid-cols-6 md:grid-cols-1 px-4 border rounded-l-lg shadow-lg">
-          {steps.map((step) => (
-            <Step
-              key={step.id}
-              number={step.id}
-              title={step.title}
-              active={step.active}
-              className="flex-shrink-0 text-secondary-text w-full"
-            />
-          ))}
+        <div className="bg-[#F7FBFF] md:w-1/4 flex flex-col justify-between  p-4 py-6 border rounded-lg shadow-lg">
+          <div className="flex flex-col space-y-12 items-center ">
+            <div className="bg-[#000066] rounded-lg px-2 flex items-center justify-center">
+              <span className="text-lg text-white font-bold">Employee ID</span>
+            </div>
+
+            <div className="grid gap-2 ">
+              {steps.map((step) => (
+                <Step
+                  key={step.id}
+                  number={step.id}
+                  title={step.title}
+                  active={step.active}
+                />
+              ))}
+            </div>
+          </div>
+          <div className=" ">
+            <Link
+              to="/"
+              className="bg-[#000066] text-center font-bold inline-block w-full border hover:border-[#000066] hover:bg-white hover:text-[#000066]  text-white px-6 py-2 rounded-full"
+            >
+              Sign In
+            </Link>
+          </div>
         </div>
 
         {/* Main Form Area */}
@@ -290,30 +315,6 @@ export default function Signup() {
                   />
                 )}
                 {stepNumber === 2 && (
-                  <PersonalInfo
-                    onChangeYourInfo={changeYourPersonalInfo}
-                    yourInfo={yourPersonalInfo}
-                    currentStep={stepNumber}
-                    isEmpty={isPersonalEmpty}
-                  />
-                )}
-                {stepNumber === 3 && (
-                  <ProfessionalInfo
-                    onChangeYourInfo={changeYourProfessionalInfo}
-                    yourInfo={professionalInfo}
-                    currentStep={stepNumber}
-                    isEmpty={isProfessionalEmpty}
-                  />
-                )}
-                {stepNumber === 4 && (
-                  <Skills
-                    currentStep={stepNumber}
-                    skills={skills}
-                    isSkillsEmpty={isSkillsEmpty}
-                    onChangeSkill={handleSkillChange}
-                  />
-                )}
-                {stepNumber === 5 && (
                   <Education
                     currentStep={stepNumber}
                     educations={educations}
@@ -321,7 +322,26 @@ export default function Signup() {
                     onChangeEducationInfo={handleEducationChange}
                   />
                 )}
-                {stepNumber === 6 && (
+                {/* {stepNumber === 3 && (
+                  <ProfessionalInfo
+                    onChangeYourInfo={changeYourProfessionalInfo}
+                    yourInfo={professionalInfo}
+                    currentStep={stepNumber}
+                    isEmpty={isProfessionalEmpty}
+                  />
+                )} */}
+                {stepNumber === 3 && (
+                  <Skills
+                    currentStep={stepNumber}
+                    skills={skills}
+                    isSkillsEmpty={isSkillsEmpty}
+                    onChangeSkill={handleSkillChange}
+                  />
+                )}
+                {/* {stepNumber === 5 && (
+                 
+                )} */}
+                {stepNumber === 4 && (
                   <Experience
                     currentStep={stepNumber}
                     experiences={experiences}
@@ -329,7 +349,8 @@ export default function Signup() {
                     onChangeExperienceInfo={handleExperienceChange}
                   />
                 )}
-
+                {stepNumber === 5 && <p>Projects section ongoing ...</p>}
+                {stepNumber === 6 && <p>Social & Extra section ongoing ...</p>}
                 {stepNumber === 7 && (
                   <LoginInformations
                     currentStep={stepNumber}
@@ -341,33 +362,42 @@ export default function Signup() {
               </div>
 
               {/* Buttons */}
-              <div className="flex justify-between mt-10">
+              <div className="flex justify-center w-1/2 mx-auto gap-2 items-center mt-10 border-t border-gray-200 pt-4">
                 <button
-                  className={`bg-gray-400 text-secondary-text hover:bg-gray-500 hover:text-gray-50 px-5 py-3 rounded-md ${goBackVisible}`}
+                  className="flex   items-center text-center text-[#000066] font-bold w-36 hover:text-white  bg-white hover:bg-[#000066] border border-[#000066] px-8 py-2 rounded-md shadow-sm"
                   onClick={prevStep}
                 >
-                  Go Back
+                  <span className="mr-2">
+                    {" "}
+                    <svg
+                      viewBox="0 0 1024 1024"
+                      fill="currentColor"
+                      height="1em"
+                      width="1em"
+                    >
+                      <path d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z" />
+                    </svg>
+                  </span>{" "}
+                  <span>Back</span>
                 </button>
-                <div className="flex flex-col">
-                  <button
-                    className="bg-primary hover:bg-primary-light text-white px-5 py-3 rounded-md"
-                    onClick={nextStep} // Use the new handleNextStep function
-                    disabled={isLoginInfoEmpty} // Disable button if login info is empty or passwords do not match
-                  >
-                    {stepNumber === 7 ? "Submit" : "Next Step"}
-                  </button>
-                </div>
-              </div>
-              <div className="mt-5 text-center">
-                <p className="text-black ">
-                  Already have an account?{" "}
-                  <Link
-                    to="/"
-                    className="text-secondary-text  font-bold underline"
-                  >
-                    Sign In
-                  </Link>
-                </p>
+                <button
+                  className="flex items-center justify-center text-white bg-[#000066]  text-center font-bold   w-36 border hover:border-[#000066] hover:bg-white hover:text-[#000066]  px-8 py-2 rounded-md  shadow-lg"
+                  onClick={nextStep}
+                  disabled={isLoginInfoEmpty}
+                >
+                  Continue{" "}
+                  <span className="ml-2">
+                    {" "}
+                    <svg
+                      viewBox="0 0 1024 1024"
+                      fill="currentColor"
+                      height="1em"
+                      width="1em"
+                    >
+                      <path d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z" />
+                    </svg>
+                  </span>
+                </button>
               </div>
             </>
           )}

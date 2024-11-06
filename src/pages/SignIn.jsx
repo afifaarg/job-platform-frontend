@@ -82,12 +82,12 @@ export default function SignIn() {
           <form class="space-y-5" onSubmit={handleSubmit}>
             <div>
               <label for="email" class="block text-left text-lg">
-                Email
+                Username
               </label>
               <input
-                type="email"
+                type="text"
                 id="email"
-                placeholder="Enter your email"
+                placeholder="Enter your username"
                 required
                 class="w-full p-3 border-b border-[#000066] outline-none focus:border-[#000066]"
               />

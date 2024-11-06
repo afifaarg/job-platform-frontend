@@ -40,7 +40,7 @@ export default function Step({ number, title, active }) {
       >
         {number}
       </div>
-      <div className="text-sm font-medium sm:hidden ">
+      <div className="text-sm font-medium hidden sm:block ">
         <span className={`cursor-default ${bg}`}>{title}</span>{" "}
         {/* Step title */}
       </div>

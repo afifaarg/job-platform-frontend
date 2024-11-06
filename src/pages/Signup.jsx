@@ -278,7 +278,7 @@ export default function Signup() {
               <span className="text-lg text-white font-bold">Employee ID</span>
             </div>
 
-            <div className="grid gap-2 ">
+            <div className="grid grid-cols-7 sm:grid-cols-1 gap-2 ">
               {steps.map((step) => (
                 <Step
                   key={step.id}

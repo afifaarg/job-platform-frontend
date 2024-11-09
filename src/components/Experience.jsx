@@ -5,9 +5,7 @@ import SectionHeading from "./SectionHeading";
 /**
  * Experience component allows users to input and manage their work experience.
  * It renders a form that can dynamically add or remove experience entries.
- * Each experience entry includes fields for job title, company, location, start date, end date, responsibilities,
- * and a checkbox to indicate if the user is currently working at the job.
- * The component syncs with the parent component's state through the `onChangeExperienceInfo` callback.
+ * Each experience entry includes fields based on the provided template.
  */
 export default function Experience({
   experiences,
@@ -26,12 +24,19 @@ export default function Experience({
   // Function to add a new experience form to the list
   const addExperienceForm = () => {
     const newForm = {
-      job_title: "",
+      employment_type: "",
       company: "",
-      location: "",
+      designation: "",
+      responsibilities: "",
       start_date: "",
       end_date: "",
-      responsibilities: "",
+      job_summary: "",
+      primary_skills: "",
+      tools_technologies: "",
+      domain_knowledge: "",
+      annual_salary: "",
+      fixed_salary: "",
+      variable_salary: "",
       currentlyWorking: false,
     };
     const updatedForms = [...experienceForms, newForm];
@@ -55,6 +60,12 @@ export default function Experience({
     onChangeExperienceInfo(updatedForms); // Update parent state
   };
 
+  const employmentTypeOptions = [
+    { value: "fullTime", label: "Full-Time" },
+    { value: "contractBased", label: "Contract-Based" },
+    { value: "internShip", label: "Internship" },
+  ];
+
   return (
     <div>
       <SectionHeading
@@ -62,34 +73,85 @@ export default function Experience({
         desc="Please fill in the below form."
       />
       <form>
-        <div className="block space-y-4 mb-6 max-h-[350px] overflow-y-scroll">
+        <div className="block space-y-4 mb-6 max-h-[450px] overflow-y-scroll">
           {experienceForms.map((form, index) => (
             <div key={index} className="border-b border-gray-300 pb-4 mb-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="">Employment Type</label>
+                <select
+                  name="employment_type"
+                  value={form.employment_type}
+                  onChange={(e) => handleExperienceChange(index, e)}
+                  className="font-medium w-full mt-1 p-2 pl-3 rounded-lg border text-[#02295a] text-[15px]"
+                >
+                  {employmentTypeOptions.map((option, idx) => (
+                    <option key={idx} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2 mt-2">
                 {[
                   {
-                    name: "job_title",
-                    label: "Job Title",
-                    placeholder: "e.g Software Engineer",
-                    type: "text",
-                  },
-                  {
                     name: "company",
-                    label: "Company",
+                    label: "Name of the Company",
                     placeholder: "e.g Google",
                     type: "text",
                   },
                   {
-                    name: "location",
-                    label: "Location",
-                    placeholder: "e.g San Francisco",
+                    name: "designation",
+                    label: "Designation",
+                    placeholder: "e.g Software Engineer",
                     type: "text",
                   },
                   {
                     name: "start_date",
-                    label: "Start Date",
+                    label: "Joining Date",
                     placeholder: "e.g 01/09/2021",
                     type: "date",
+                  },
+                  {
+                    name: "end_date",
+                    label: "End Date",
+                    placeholder: "e.g 01/09/2022",
+                    type: "date",
+                  },
+                  {
+                    name: "primary_skills",
+                    label: "Primary Skills",
+                    placeholder: "e.g JavaScript, React",
+                    type: "text",
+                  },
+                  {
+                    name: "tools_technologies",
+                    label: "Tools and Technologies",
+                    placeholder: "e.g Git, Docker",
+                    type: "text",
+                  },
+                  {
+                    name: "domain_knowledge",
+                    label: "Domain/Industry Knowledge",
+                    placeholder: "e.g FinTech, Healthcare",
+                    type: "text",
+                  },
+                  {
+                    name: "annual_salary",
+                    label: "Annual Salary",
+                    placeholder: "e.g 50000",
+                    type: "number",
+                  },
+                  {
+                    name: "fixed_salary",
+                    label: "Fixed Salary",
+                    placeholder: "e.g 40000",
+                    type: "number",
+                  },
+                  {
+                    name: "variable_salary",
+                    label: "Variable Salary",
+                    placeholder: "e.g 10000",
+                    type: "number",
                   },
                 ].map((field) => (
                   <FormField
@@ -105,29 +167,15 @@ export default function Experience({
                 ))}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <FormField
-                  onChangeYourInfo={(e) => handleExperienceChange(index, e)}
-                  name="end_date"
-                  label="End Date"
-                  placeholder="e.g 01/09/2022"
-                  value={form.end_date}
-                  isEmpty={isExperienceEmpty}
-                  type="date"
-                  disabled={form.currentlyWorking}
-                />
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    name="currentlyWorking"
-                    checked={form.currentlyWorking}
-                    onChange={(e) => handleExperienceChange(index, e)}
-                    className="mr-2"
-                  />
-                  <label className="text-sm">Currently working here</label>
-                </div>
-              </div>
-
+              <FormField
+                onChangeYourInfo={(e) => handleExperienceChange(index, e)}
+                name="job_summary"
+                label="Job Summary"
+                placeholder="Brief summary of job"
+                value={form.job_summary}
+                isEmpty={isExperienceEmpty}
+                type="long"
+              />
               <FormField
                 onChangeYourInfo={(e) => handleExperienceChange(index, e)}
                 name="responsibilities"
@@ -138,49 +186,78 @@ export default function Experience({
                 type="long"
               />
 
-              <button
-                type="button"
-                className="text-red-500 space-x-2 font-bold mt-4 rounded flex items-center"
-                onClick={() => removeExperienceForm(index)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 inline"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+              <div className="flex items-center mt-4">
+                <input
+                  type="checkbox"
+                  name="currentlyWorking"
+                  checked={form.currentlyWorking}
+                  onChange={(e) => handleExperienceChange(index, e)}
+                  className="mr-2"
+                />
+                <label className="text-sm">Currently working here</label>
+              </div>
+              <div className="flex items-center justify-start space-x-4 border-t mt-2 py-2">
+                <button
+                  type="button"
+                  className="text-red-500 bg-red-50 flex items-center space-x-2 p-2 rounded-lg hover:shadow-lg font-bold"
+                  onClick={() => removeExperienceForm(index)}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9.586L4.293 3.879a1 1 0 00-1.414 1.414L8.586 11l-5.707 5.707a1 1 0 001.414 1.414L10 12.414l5.707 5.707a1 1 0 001.414-1.414L11.414 11l5.707-5.707a1 1 0 00-1.414-1.414L10 9.586z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Remove Experience
-              </button>
+                  <svg
+                    viewBox="0 0 64 64"
+                    fill="currentColor"
+                    height="1em"
+                    width="1em"
+                    className="font-bold text-red-500"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeMiterlimit={10}
+                      strokeWidth={2}
+                      d="M18.947 17.153l26.098 25.903M19.045 43.153l25.902-26.097"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeMiterlimit={10}
+                      strokeWidth={2}
+                      d="M62.998999999999995 32 A30.999 30.999 0 0 1 32 62.998999999999995 A30.999 30.999 0 0 1 1.0010000000000012 32 A30.999 30.999 0 0 1 62.998999999999995 32 z"
+                    />
+                  </svg>
+                  <span>Remove Experience</span>
+                </button>
+                {experienceForms.length == index + 1 && (
+                  <button
+                    type="button"
+                    className=" text-[#000066] flex items-center space-x-2 p-2 rounded-lg hover:shadow-lg bg-blue-50 font-bold"
+                    onClick={addExperienceInfo || addExperienceForm}
+                  >
+                    <svg
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      height="1em"
+                      width="1em"
+                    >
+                      <path
+                        fill="currentColor"
+                        fillRule="evenodd"
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-8a8 8 0 100 16 8 8 0 000-16z"
+                        clipRule="evenodd"
+                      />
+                      <path
+                        fill="currentColor"
+                        fillRule="evenodd"
+                        d="M13 7a1 1 0 10-2 0v4H7a1 1 0 100 2h4v4a1 1 0 102 0v-4h4a1 1 0 100-2h-4V7z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span>Add Another Experience</span>
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
-        <button
-          type="button"
-          className="mt-4 text-blue-500 flex items-center font-bold space-x-2"
-          onClick={addExperienceInfo ? addExperienceInfo : addExperienceForm}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 inline mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          Add Another Experience
-        </button>
       </form>
     </div>
   );

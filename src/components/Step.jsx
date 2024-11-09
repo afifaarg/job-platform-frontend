@@ -35,7 +35,9 @@ export default function Step({ number, title, active }) {
     >
       <div
         className={`font-bold text-center w-8 h-8 flex items-center justify-center rounded-full text-[#000066] ${
-          active ? "bg-[#E5E7EB] " : "bg-[#F3F4F6] "
+          active
+            ? "bg-[#000066] text-white  sm:text-[#000066] sm:bg-[#E5E7EB] "
+            : " bg-[#F3F4F6] "
         }`} // Number circle styling for active and inactive states.
       >
         {number}

@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import PersonalInfo from "../components/PersonalInfo";
 import ProfessionalInfo from "../components/ProfessionalInfo";
+import ProjectsSection from "../components/ProjectsSection";
 
 export default function Signup() {
   // States
@@ -52,13 +53,25 @@ export default function Signup() {
 
   const [isEmpty, setIsEmpty] = useState(false);
   const [yourPersonalInfo, setYourPersonalInfo] = useState({});
+  const [isProjectEmpty, setIsProjectEmpty] = useState(false);
+  const [Projects, setProjectsInfo] = useState([
+    {
+      proejct_title: "",
+      project_summary: "",
+      project_link: "",
+    },
+  ]);
 
   const [professionalInfo, setProfessionalInfo] = useState({
-    github_link: "",
-    linkedin_link: "",
-    portfolio_link: "",
-    resume_file: "",
-    proficiency: "",
+    extra_curricular_activities: "",
+    adhaar_number: "",
+    disability_status: "",
+    govt_employee: "",
+    ex_military: "",
+    reserve_forces: "",
+    military: "",
+    current_ctc: "",
+    expected_ctc: "",
   });
   const [isPersonalEmpty, setIsPersonalEmpty] = useState(false);
   const [isProfessionalEmpty, setIsProfessionalEmpty] = useState(false);
@@ -262,6 +275,9 @@ export default function Signup() {
   const handleExperienceChange = (newExperience) => {
     setExperiences(newExperience);
   };
+  const handleProjectsChange = (newProject) => {
+    setProjectsInfo(newProject);
+  };
 
   const handleLoginInfoChange = (event) => {
     const { name, value } = event.target;
@@ -274,8 +290,18 @@ export default function Signup() {
         {/* Sidebar with Steps */}
         <div className="bg-[#F7FBFF] md:w-1/4 flex flex-col justify-between  p-4 py-6 border rounded-lg shadow-lg">
           <div className="flex flex-col space-y-12 items-center ">
-            <div className="bg-[#000066] rounded-lg px-2 flex items-center justify-center">
-              <span className="text-lg text-white font-bold">Employee ID</span>
+            <div className="  w-full flex items-center justify-between sm:justify-center">
+              <span className="text-lg rounded-lg px-2 bg-[#000066] text-white font-bold">
+                Employee ID
+              </span>
+              <div className="sm:hidden">
+                <Link
+                  to="/"
+                  className="bg-[#000066] text-center font-bold inline-block w-full border hover:border-[#000066] hover:bg-white hover:text-[#000066]  text-white px-6 py-2 rounded-full"
+                >
+                  Sign In
+                </Link>
+              </div>
             </div>
 
             <div className="grid grid-cols-7 sm:grid-cols-1 gap-2 ">
@@ -289,7 +315,7 @@ export default function Signup() {
               ))}
             </div>
           </div>
-          <div className=" ">
+          <div className="hidden sm:block">
             <Link
               to="/"
               className="bg-[#000066] text-center font-bold inline-block w-full border hover:border-[#000066] hover:bg-white hover:text-[#000066]  text-white px-6 py-2 rounded-full"
@@ -322,14 +348,7 @@ export default function Signup() {
                     onChangeEducationInfo={handleEducationChange}
                   />
                 )}
-                {/* {stepNumber === 3 && (
-                  <ProfessionalInfo
-                    onChangeYourInfo={changeYourProfessionalInfo}
-                    yourInfo={professionalInfo}
-                    currentStep={stepNumber}
-                    isEmpty={isProfessionalEmpty}
-                  />
-                )} */}
+
                 {stepNumber === 3 && (
                   <Skills
                     currentStep={stepNumber}
@@ -349,8 +368,22 @@ export default function Signup() {
                     onChangeExperienceInfo={handleExperienceChange}
                   />
                 )}
-                {stepNumber === 5 && <p>Projects section ongoing ...</p>}
-                {stepNumber === 6 && <p>Social & Extra section ongoing ...</p>}
+                {stepNumber === 5 && (
+                  <ProjectsSection
+                    currentStep={stepNumber}
+                    projects={Projects}
+                    isProjectEmpty={isProjectEmpty}
+                    onChangeProjectInfo={handleProjectsChange}
+                  />
+                )}
+                {stepNumber === 6 && (
+                  <ProfessionalInfo
+                    onChangeYourInfo={changeYourProfessionalInfo}
+                    yourInfo={professionalInfo}
+                    currentStep={stepNumber}
+                    isEmpty={isProfessionalEmpty}
+                  />
+                )}
                 {stepNumber === 7 && (
                   <LoginInformations
                     currentStep={stepNumber}

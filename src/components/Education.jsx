@@ -1,193 +1,299 @@
 import React, { useState, useEffect } from "react";
 import FormField from "./FormField";
 import SectionHeading from "./SectionHeading";
-/**
- * Education form Component
- *
- * This component displays a form for adding a new education data.
 
- */
 export default function Education({
-  educations, // Array of existing education records
-  onChangeEducationInfo, // Callback function to handle updates to education information
-  isEducationEmpty, // Boolean to indicate if education fields are empty
-  addEducationInfo, // Function to add a new education entry
-  removeEducation, // Function to remove an education entry (not used in this implementation)
+  educations,
+  onChangeEducationInfo,
+  addEducationInfo,
+  removeEducation,
 }) {
-  // Initialize the local state with the educations prop
   const [educationForms, setEducationForms] = useState(educations);
 
-  // Synchronize the local state with the parent educations when the component mounts or when the educations prop changes
   useEffect(() => {
     setEducationForms(educations);
   }, [educations]);
 
-  // Function to add a new education form
   const addEducationForm = () => {
     const newForm = {
-      degree: "", // Degree field
-      field: "", // Field of study
-      institution: "", // Name of the institution
-      start_date: "", // Start date of the education
-      end_date: "", // End date of the education
-      description: "", // Description of what was learned
-      stillStudying: false, // Checkbox to indicate if still studying
+      educationLevel: "", // New field for education level
+      board: "",
+      passingOutYear: "",
+      schoolMedium: "",
+      gradingSystem: "",
+      totalMarks: "",
+      course: "",
+      courseType: "",
+      specialization: "",
+      institution: "",
+      startDate: "",
+      endDate: "",
+      stillStudying: false,
     };
-    // Update the forms array with the new form
     const updatedForms = [...educationForms, newForm];
     setEducationForms(updatedForms);
-    onChangeEducationInfo(updatedForms); // Update the parent state
+    onChangeEducationInfo(updatedForms);
   };
 
-  // Function to remove an education form based on its index
   const removeEducationForm = (index) => {
-    // Filter out the form at the specified index
     const updatedForms = educationForms.filter((_, i) => i !== index);
     setEducationForms(updatedForms);
-    onChangeEducationInfo(updatedForms); // Update the parent state
+    onChangeEducationInfo(updatedForms);
   };
 
-  // Function to handle changes in education form fields
   const handleEducationChange = (index, e) => {
-    const { name, value, type, checked } = e.target; // Destructure event properties
-    const updatedForms = [...educationForms]; // Create a copy of the current forms
-    // Update the specific form field based on user input
+    const { name, value, type, checked } = e.target;
+    const updatedForms = [...educationForms];
     updatedForms[index][name] = type === "checkbox" ? checked : value;
     setEducationForms(updatedForms);
-    onChangeEducationInfo(updatedForms); // Update the parent state
+    onChangeEducationInfo(updatedForms);
   };
+
+  const educationLevels = [
+    { value: "", label: "Select Your Education Level" },
+    { value: "class10", label: "Class 10" },
+    { value: "class12", label: "Class 12" },
+    { value: "diploma", label: "Diploma" },
+    { value: "graduate", label: "Graduate" },
+    { value: "postGraduate", label: "Post Graduate" },
+    { value: "doctorate", label: "Doctorate/PHD" },
+  ];
 
   return (
     <div>
-      {/* Section heading for the education information form */}
       <SectionHeading
-        title="Education Informations"
+        title="Education Information"
         desc="Please fill in the below form."
       />
       <form>
-        <div className="block space-y-4 mb-6 max-h-[375px] overflow-y-scroll">
-          {/* Map over educationForms to render form fields for each education entry */}
+        <div className="block space-y-4 mb-4 max-h-[450px] overflow-y-auto">
           {educationForms.map((form, index) => (
             <div key={index} className="border-b border-gray-300 pb-4 mb-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Define fields for degree, field of study, institution, and start date */}
-                {[
-                  {
-                    name: "degree",
-                    label: "Degree",
-                    placeholder: "e.g Bachelor",
-                    type: "text",
-                  },
-                  {
-                    name: "field",
-                    label: "Field",
-                    placeholder: "e.g Computer science",
-                    type: "text",
-                  },
-                  {
-                    name: "institution",
-                    label: "Institution",
-                    placeholder: "e.g Oxford",
-                    type: "text",
-                  },
-                  {
-                    name: "start_date",
-                    label: "Start date",
-                    placeholder: "e.g 01/09/2021",
-                    type: "date",
-                  },
-                ].map((field) => (
-                  <FormField
-                    key={field.name}
-                    onChangeYourInfo={(e) => handleEducationChange(index, e)} // Handle field changes
-                    name={field.name}
-                    label={field.label}
-                    placeholder={field.placeholder}
-                    value={form[field.name]} // Current value of the field
-                    isEmpty={isEducationEmpty} // Validation state
-                    type={field.type}
-                  />
-                ))}
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              {/* Education Level Dropdown - shown initially */}
+              <div className="mb-4">
                 <FormField
-                  onChangeYourInfo={(e) => handleEducationChange(index, e)} // Handle end date changes
-                  name="end_date"
-                  label="End date"
-                  placeholder="e.g 01/09/2021"
-                  value={form.end_date}
-                  isEmpty={isEducationEmpty}
-                  type="date"
-                  disabled={form.stillStudying} // Disable if still studying
+                  name="educationLevel"
+                  label="Education Level"
+                  value={form.educationLevel}
+                  type="select"
+                  options={educationLevels}
+                  onChangeYourInfo={(e) => handleEducationChange(index, e)}
                 />
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    name="stillStudying" // Checkbox to indicate if still studying
-                    checked={form.stillStudying} // Current checked state
-                    onChange={(e) => handleEducationChange(index, e)} // Handle checkbox change
-                    className="mr-2"
-                  />
-                  <label className="text-sm">Still studying here</label>
-                </div>
               </div>
+              {/* Conditionally render fields based on selected education level */}
+              {form.educationLevel && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {["class10", "class12"].includes(form.educationLevel) ? (
+                    <>
+                      <FormField
+                        name="board"
+                        label="Board"
+                        placeholder="Enter board"
+                        value={form.board}
+                        type="text"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
 
-              <FormField
-                onChangeYourInfo={(e) => handleEducationChange(index, e)} // Handle description changes
-                name="description"
-                label="Description"
-                placeholder="Briefly describe what you learned"
-                value={form.description}
-                isEmpty={isEducationEmpty}
-                type="long"
-              />
+                      <FormField
+                        name="passingOutYear"
+                        label="Passing Out Year"
+                        placeholder="e.g. 2020"
+                        type="number"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="schoolMedium"
+                        label="School Medium"
+                        placeholder="e.g. English"
+                        value={form.schoolMedium}
+                        type="text"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="gradingSystem"
+                        label="Grading System"
+                        value={form.gradingSystem}
+                        type="dropdown"
+                        options={[
+                          { value: "percentage", label: "Percentage" },
+                          { value: "cgpa", label: "CGPA" },
+                          { value: "other", label: "Other" },
+                        ]}
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="totalMarks"
+                        label="Total Marks"
+                        placeholder="Enter total marks"
+                        value={form.totalMarks}
+                        type="number"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <FormField
+                        name="course"
+                        label="Course"
+                        placeholder="e.g. Bachelors"
+                        value={form.course}
+                        type="text"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="courseType"
+                        label="Course Type"
+                        placeholder="e.g. Full-time"
+                        value={form.courseType}
+                        type="text"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="specialization"
+                        label="Specialization"
+                        placeholder="e.g. Computer Science"
+                        value={form.specialization}
+                        type="text"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="institution"
+                        label="Institution"
+                        placeholder="e.g. Oxford"
+                        value={form.institution}
+                        type="text"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="startDate"
+                        label="Start Date"
+                        value={form.startDate}
+                        type="date"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="endDate"
+                        label="End Date"
+                        value={form.endDate}
+                        type="date"
+                        disabled={form.stillStudying}
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="gradingSystem"
+                        label="Grading System"
+                        value={form.gradingSystem}
+                        type="dropdown"
+                        options={[
+                          { value: "percentage", label: "Percentage" },
+                          { value: "cgpa", label: "CGPA" },
+                          { value: "other", label: "Other" },
+                        ]}
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                      <FormField
+                        name="totalMarks"
+                        label="Total Marks"
+                        placeholder="Enter total marks"
+                        value={form.totalMarks}
+                        type="number"
+                        onChangeYourInfo={(e) =>
+                          handleEducationChange(index, e)
+                        }
+                      />
+                    </>
+                  )}
+                </div>
+              )}
 
-              {/* Button to remove this education entry */}
-              <button
-                type="button"
-                className="text-red-500 space-x-2 font-bold mt-4 rounded flex items-center"
-                onClick={() => removeEducationForm(index)} // Remove education form at this index
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 inline"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+              <div className="flex items-center justify-start space-x-4 border-t mt-2 py-2">
+                <button
+                  type="button"
+                  className="text-red-500 bg-red-50 flex items-center space-x-2 p-2 rounded-lg hover:shadow-lg font-bold  "
+                  onClick={() => removeEducationForm(index)}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9.586L4.293 3.879a1 1 0 00-1.414 1.414L8.586 11l-5.707 5.707a1 1 0 001.414 1.414L10 12.414l5.707 5.707a1 1 0 001.414-1.414L11.414 11l5.707-5.707a1 1 0 00-1.414-1.414L10 9.586z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Remove Education
-              </button>
+                  <svg
+                    viewBox="0 0 64 64"
+                    fill="currentColor"
+                    height="1em"
+                    width="1em"
+                    className="font-bold text-red-500"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeMiterlimit={10}
+                      strokeWidth={2}
+                      d="M18.947 17.153l26.098 25.903M19.045 43.153l25.902-26.097"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeMiterlimit={10}
+                      strokeWidth={2}
+                      d="M62.998999999999995 32 A30.999 30.999 0 0 1 32 62.998999999999995 A30.999 30.999 0 0 1 1.0010000000000012 32 A30.999 30.999 0 0 1 62.998999999999995 32 z"
+                    />
+                  </svg>
+                  <span>Remove Education</span>
+                </button>
+                {educationForms.length == index + 1 && (
+                  <button
+                    type="button"
+                    className=" text-[#000066] flex items-center space-x-2 p-2 rounded-lg hover:shadow-lg bg-blue-50 font-bold"
+                    onClick={
+                      addEducationInfo ? addEducationInfo : addEducationForm
+                    }
+                  >
+                    <svg
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      height="1em"
+                      width="1em"
+                    >
+                      <path
+                        fill="currentColor"
+                        fillRule="evenodd"
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-8a8 8 0 100 16 8 8 0 000-16z"
+                        clipRule="evenodd"
+                      />
+                      <path
+                        fill="currentColor"
+                        fillRule="evenodd"
+                        d="M13 7a1 1 0 10-2 0v4H7a1 1 0 100 2h4v4a1 1 0 102 0v-4h4a1 1 0 100-2h-4V7z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span>Add Another Education</span>
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
-        {/* Button to add a new education entry */}
-        <button
-          type="button"
-          className="mt-4 text-blue-500 flex items-center font-bold space-x-2"
-          onClick={addEducationInfo ? addEducationInfo : addEducationForm} // Call addEducationInfo if provided, otherwise add new form
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 inline mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          Add Another Education
-        </button>
       </form>
     </div>
   );

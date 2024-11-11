@@ -26,8 +26,8 @@ export default function Education({
       courseType: "",
       specialization: "",
       institution: "",
-      startDate: "",
-      endDate: "",
+      start_date: "",
+      end_date: "",
       stillStudying: false,
     };
     const updatedForms = [...educationForms, newForm];
@@ -183,18 +183,18 @@ export default function Education({
                         }
                       />
                       <FormField
-                        name="startDate"
+                        name="start_date"
                         label="Start Date"
-                        value={form.startDate}
+                        value={form.start_date}
                         type="date"
                         onChangeYourInfo={(e) =>
                           handleEducationChange(index, e)
                         }
                       />
                       <FormField
-                        name="endDate"
+                        name="end_date"
                         label="End Date"
-                        value={form.endDate}
+                        value={form.end_date}
                         type="date"
                         disabled={form.stillStudying}
                         onChangeYourInfo={(e) =>

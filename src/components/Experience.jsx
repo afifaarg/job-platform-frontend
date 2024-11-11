@@ -26,7 +26,7 @@ export default function Experience({
     const newForm = {
       employment_type: "",
       company: "",
-      designation: "",
+      job_title: "",
       responsibilities: "",
       start_date: "",
       end_date: "",
@@ -61,8 +61,8 @@ export default function Experience({
   };
 
   const employmentTypeOptions = [
-    { value: "fullTime", label: "Full-Time" },
-    { value: "contractBased", label: "Contract-Based" },
+    { value: "fulltime", label: "Full-Time" },
+    { value: "parttime", label: "Contract-Based" },
     { value: "internShip", label: "Internship" },
   ];
 
@@ -100,7 +100,7 @@ export default function Experience({
                     type: "text",
                   },
                   {
-                    name: "designation",
+                    name: "job_title",
                     label: "Designation",
                     placeholder: "e.g Software Engineer",
                     type: "text",

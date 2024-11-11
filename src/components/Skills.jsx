@@ -208,7 +208,7 @@ export default function Skills({ skills, onChangeSkill, isSkillsEmpty }) {
           {skills.map((skill, index) => (
             <span
               key={index}
-              className="bg-blue-500 text-white px-2 py-1 rounded-full flex items-center"
+              className="bg-[#000066] text-white px-2 py-1 rounded-full flex items-center"
             >
               {skill}
               <button

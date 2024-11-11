@@ -169,7 +169,7 @@ export default function YourInfo({ yourInfo, onChangeYourInfo, isEmpty }) {
                 name={formField.name}
                 label={formField.label}
                 placeholder={formField.placeholder}
-                value={yourInfo[formField.name]}
+                value={yourInfo[formField.name] || ""}
                 type={formField.type}
                 options={formField.options}
                 isEmpty={isEmpty}
@@ -215,7 +215,7 @@ export default function YourInfo({ yourInfo, onChangeYourInfo, isEmpty }) {
                 name={formField.name}
                 label={formField.label}
                 placeholder={formField.placeholder}
-                value={yourInfo[formField.name]}
+                value={yourInfo[formField.name] || ""}
                 type={formField.type}
                 options={formField.options}
                 isEmpty={isEmpty}

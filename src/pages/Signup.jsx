@@ -81,24 +81,40 @@ export default function Signup() {
 
   const [educations, setEducations] = useState([
     {
-      name: "",
-      degree: "",
-      field: "",
+      educationLevel: "",
+      board: "",
+      user: "",
+      passingOutYear: "",
+      schoolMedium: "",
+      gradingSystem: "",
+      totalMarks: "",
+      course: "",
+      courseType: "",
+      specialization: "",
+      institution: "",
       start_date: "",
-      description: "",
       end_date: "",
+      stillStudying: "",
     },
   ]);
   const [isEducationsEmpty, setIsEducationsEmpty] = useState(false);
 
   const [experiences, setExperiences] = useState([
     {
-      job_title: "",
+      employment_type: "",
       company: "",
-      location: "",
+      job_title: "",
+      responsibilities: "",
       start_date: "",
       end_date: "",
-      responsibilities: "",
+      job_summary: "",
+      primary_skills: "",
+      tools_technologies: "",
+      domain_knowledge: "",
+      annual_salary: "",
+      fixed_salary: "",
+      variable_salary: "",
+      currentlyWorking: false,
     },
   ]);
 
@@ -123,71 +139,36 @@ export default function Signup() {
   const submitForm = async () => {
     try {
       const payload = {
-        username: loginInfomations.username,
-        password: loginInfomations.password,
-        name: yourInfo.name,
-        email: yourInfo.email,
-        phone: yourInfo.phone,
-        country: yourInfo.country,
-        city: yourInfo.city,
-        description: yourPersonalInfo.description,
-        github_link: professionalInfo.github_link,
-        linkedin_link: professionalInfo.linkedin_link,
-        portfolio_link: professionalInfo.portfolio_link,
-        resume_file: professionalInfo.resume_file,
-        proficiency: professionalInfo.proficiency,
-        profile_pic: yourPersonalInfo.profile_pic,
-        gender: yourPersonalInfo.gender,
-        birth_Date: yourPersonalInfo.birth_Date,
-        skills: skills, // Assuming each skill is a string
-        educations: educations.map((education) => ({
-          degree: education.degree,
-          field: education.field,
-          institution: education.institution,
-          start_date: education.start_date,
-          end_date: education.end_date,
-          description: education.description,
-        })), // Ensure educations is an array of objects with correct fields
-        experiences: experiences.map((experience) => ({
-          job_title: experience.job_title,
-          company: experience.company,
-          location: experience.location,
-          start_date: experience.start_date,
-          end_date: experience.end_date,
-          responsibilities: experience.responsibilities,
-        })), // Ensure experiences is an array of objects with correct fields
+        ...yourInfo,
+        ...professionalInfo,
+        ...loginInfomations,
+        skills: skills.map((skill) => ({ name: skill })), // Map skills correctly
+        educations,
+        experiences,
       };
-
-      // Axios POST request to the Django backend
+      console.log(payload);
       const response = await axios.post(
         "https://job-platform-api-1.onrender.com/backendAPI/users/",
-        payload, // Send the payload as is, no need to stringify
+        payload,
         {
-          headers: {
-            "Content-Type": "application/json", // Set content type for Django
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
-      // Handle success
       if (response.status === 201) {
         setDisplayThankyou(true);
       } else {
         alert("Error submitting form:", response.status, response.data);
       }
     } catch (error) {
-      // Detailed error handling
       if (error.response) {
-        // Server responded with a status other than 2xx
         console.error("Error response:", error.response.data);
         alert(
           `Error: ${error.response.data.detail || "Something went wrong!"}`
         );
       } else if (error.request) {
-        // Request was made but no response received
         console.error("No response from server:", error.request);
       } else {
-        // Something else happened
         console.error("Error:", error.message);
       }
     }

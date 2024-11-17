@@ -266,7 +266,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="container my-4 mx-auto shadow-lg rounded-xl">
+    <div className="container my-4 mx-auto shadow-lg rounded-xl min-h-screen">
       <div className="rounded-xl p-0 md:p-3 flex flex-col md:flex-row justify-between ">
         {/* Sidebar with Steps */}
         <div className="bg-[#F7FBFF] md:w-1/4 flex flex-col justify-between  p-4 py-6 border rounded-lg shadow-lg">

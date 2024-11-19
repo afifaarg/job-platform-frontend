@@ -12,7 +12,9 @@ export default function NavBar() {
     if (userId) {
       // Fetch user data from the backend
       axios
-        .get(`http://127.0.0.1:8000/backendAPI/users/${userId}`)
+        .get(
+          `https://job-platform-api-1.onrender.com/backendAPI/users/${userId}`
+        )
         .then((response) => {
           const userData = response.data;
           // Check if educations, experiences, or projects data is missing
@@ -40,7 +42,7 @@ export default function NavBar() {
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refresh"); // Get refresh token
     axios
-      .post("http://127.0.0.1:8000/backendAPI/logout/", {
+      .post("https://job-platform-api-1.onrender.com/backendAPI/logout/", {
         refresh_token: refreshToken,
       })
       .then(() => {

@@ -32,7 +32,7 @@ export default function RegisterUser() {
 
     axios
       .post(
-        "http://127.0.0.1:8000/backendAPI/users/",
+        "https://job-platform-api-1.onrender.com/backendAPI/users/",
         {
           email,
           username,

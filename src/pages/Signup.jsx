@@ -178,7 +178,7 @@ export default function Signup() {
       const userId = localStorage.getItem("userID");
       console.log(formattedPayload);
       const response = await axios.put(
-        `http://127.0.0.1:8000/backendAPI/users/${userId}/`,
+        `https://job-platform-api-1.onrender.com/backendAPI/users/${userId}/`,
         formattedPayload,
         {
           headers: { "Content-Type": "application/json" },

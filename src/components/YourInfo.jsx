@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import FormField from "./FormField";
 import SectionHeading from "./SectionHeading";
-
+import Select from "react-select";
+import countryList from "react-select-country-list";
 export default function YourInfo({ yourInfo, onChangeYourInfo, isEmpty }) {
   const [formFields] = useState({
     personalInfo: [
@@ -11,20 +12,6 @@ export default function YourInfo({ yourInfo, onChangeYourInfo, isEmpty }) {
         type: "text",
         label: "Full Name",
         placeholder: "e.g Harry Potter",
-      },
-      {
-        id: 2,
-        name: "email",
-        type: "email",
-        label: "Email Address",
-        placeholder: "e.g harry@gmail.com",
-      },
-      {
-        id: 3,
-        name: "phone",
-        type: "text",
-        label: "Phone Number",
-        placeholder: "e.g +91 234 567 890",
       },
       {
         id: 20,
@@ -49,49 +36,43 @@ export default function YourInfo({ yourInfo, onChangeYourInfo, isEmpty }) {
     currentAddress: [
       {
         id: 4,
-        name: "currentAddress",
+        name: "current_address_line_1", // Changed to match backend
         type: "text",
         label: "Current Address Line 1",
         placeholder: "e.g 123 Main St",
       },
       {
         id: 5,
-        name: "currentAddress1",
+        name: "current_address_line_2", // Changed to match backend
         type: "text",
         label: "Current Address Line 2",
         placeholder: "Apartment, suite, unit, etc.",
       },
-      {
-        id: 6,
-        name: "currentAddress2",
-        type: "text",
-        label: "Current Address Line 3",
-        placeholder: "Additional address info",
-      },
+
       {
         id: 7,
-        name: "countryC",
-        type: "text",
+        name: "current_country", // Changed to match backend
+        type: "country",
         label: "Current Country",
         placeholder: "e.g India",
       },
       {
         id: 8,
-        name: "cityC",
+        name: "current_city", // Changed to match backend
         type: "text",
         label: "Current City",
         placeholder: "e.g Mumbai",
       },
       {
         id: 9,
-        name: "stateC",
+        name: "current_state", // Changed to match backend
         type: "text",
         label: "Current State",
         placeholder: "e.g Maharashtra",
       },
       {
         id: 10,
-        name: "pinCodeC",
+        name: "current_pin_code", // Changed to match backend
         type: "text",
         label: "Current Pincode",
         placeholder: "e.g 400001",
@@ -100,49 +81,42 @@ export default function YourInfo({ yourInfo, onChangeYourInfo, isEmpty }) {
     permanentAddress: [
       {
         id: 11,
-        name: "permanentAddress",
+        name: "permanent_address_line_1", // Changed to match backend
         type: "text",
         label: "Permanent Address Line 1",
         placeholder: "e.g 456 Main St",
       },
       {
         id: 12,
-        name: "permanentAddress1",
+        name: "permanent_address_line_2", // Changed to match backend
         type: "text",
         label: "Permanent Address Line 2",
         placeholder: "Apartment, suite, unit, etc.",
       },
       {
-        id: 13,
-        name: "permanentAddress2",
-        type: "text",
-        label: "Permanent Address Line 3",
-        placeholder: "Additional address info",
-      },
-      {
         id: 14,
-        name: "countryP",
-        type: "text",
+        name: "permanent_country", // Changed to match backend
+        type: "country",
         label: "Permanent Country",
         placeholder: "e.g India",
       },
       {
         id: 15,
-        name: "cityP",
+        name: "permanent_city", // Changed to match backend
         type: "text",
         label: "Permanent City",
         placeholder: "e.g Mumbai",
       },
       {
         id: 16,
-        name: "stateP",
+        name: "permanent_state", // Changed to match backend
         type: "text",
         label: "Permanent State",
         placeholder: "e.g Maharashtra",
       },
       {
         id: 17,
-        name: "pinCodeP",
+        name: "permanent_pin_code", // Changed to match backend
         type: "text",
         label: "Permanent Pincode",
         placeholder: "e.g 400001",

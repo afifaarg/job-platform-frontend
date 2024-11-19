@@ -231,35 +231,37 @@ export default function Education({
               )}
 
               <div className="flex items-center justify-start space-x-4 border-t mt-2 py-2">
-                <button
-                  type="button"
-                  className="text-red-500 bg-red-50 flex items-center space-x-2 p-2 rounded-lg hover:shadow-lg font-bold  "
-                  onClick={() => removeEducationForm(index)}
-                >
-                  <svg
-                    viewBox="0 0 64 64"
-                    fill="currentColor"
-                    height="1em"
-                    width="1em"
-                    className="font-bold text-red-500"
+                {educationForms.length > 1 && (
+                  <button
+                    type="button"
+                    className="text-red-500 bg-red-50 flex items-center space-x-2 p-2 rounded-lg hover:shadow-lg font-bold  "
+                    onClick={() => removeEducationForm(index)}
                   >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeMiterlimit={10}
-                      strokeWidth={2}
-                      d="M18.947 17.153l26.098 25.903M19.045 43.153l25.902-26.097"
-                    />
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeMiterlimit={10}
-                      strokeWidth={2}
-                      d="M62.998999999999995 32 A30.999 30.999 0 0 1 32 62.998999999999995 A30.999 30.999 0 0 1 1.0010000000000012 32 A30.999 30.999 0 0 1 62.998999999999995 32 z"
-                    />
-                  </svg>
-                  <span>Remove Education</span>
-                </button>
+                    <svg
+                      viewBox="0 0 64 64"
+                      fill="currentColor"
+                      height="1em"
+                      width="1em"
+                      className="font-bold text-red-500"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeMiterlimit={10}
+                        strokeWidth={2}
+                        d="M18.947 17.153l26.098 25.903M19.045 43.153l25.902-26.097"
+                      />
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeMiterlimit={10}
+                        strokeWidth={2}
+                        d="M62.998999999999995 32 A30.999 30.999 0 0 1 32 62.998999999999995 A30.999 30.999 0 0 1 1.0010000000000012 32 A30.999 30.999 0 0 1 62.998999999999995 32 z"
+                      />
+                    </svg>
+                    <span>Remove Education</span>
+                  </button>
+                )}
                 {educationForms.length == index + 1 && (
                   <button
                     type="button"

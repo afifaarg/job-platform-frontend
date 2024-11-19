@@ -13,6 +13,7 @@ const TABS = [
   { label: "All", value: "all" },
   { label: "Admin", value: "admin" },
   { label: "Employee", value: "employee" },
+  { label: "Organization", value: "organization" },
 ];
 
 const TABLE_HEAD = [
@@ -106,7 +107,7 @@ export default function MembersTable() {
   };
 
   return (
-    <div className="w-full h-full bg-white shadow-lg rounded-lg">
+    <div className="w-full h-full bg-gray-50 shadow-lg rounded-lg">
       <div className="p-6 border-b">
         <div className="flex justify-between items-center">
           <div>
@@ -118,7 +119,7 @@ export default function MembersTable() {
             </p>
           </div>
           <button
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-white hover:border-primary hover:text-primary font-bold border"
             onClick={handleOpen}
           >
             + New Admin
@@ -134,7 +135,7 @@ export default function MembersTable() {
                 key={value}
                 className={`py-2 px-4 rounded-lg ${
                   activeTab === value
-                    ? "bg-blue-600 text-white"
+                    ? "bg-primary text-white"
                     : "bg-gray-100 text-gray-600"
                 }`}
                 onClick={() => {
@@ -199,7 +200,7 @@ export default function MembersTable() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {row.role !== "admin" ? (
                     <button
-                      className="text-blue-500 bg-gray-100 hover:bg-gray-200 rounded-full px-2 py-2"
+                      className="text-primary bg-gray-100 hover:bg-gray-200 rounded-full px-2 py-2"
                       onClick={() => handleViewProfile(row.id)}
                     >
                       <svg

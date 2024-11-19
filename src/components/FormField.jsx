@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
+import Select from "react-select";
+import countryList from "react-select-country-list";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
-/**
- * FormField component is a reusable input field used throughout the platform's forms.
- * It can render different types of inputs including text, textarea, and select dropdowns.
- * This component also handles validation feedback by showing a required field message
- * and highlighting the input border if the field is empty.
- */
 export default function FormField({
   name,
   label,
@@ -19,9 +17,18 @@ export default function FormField({
 }) {
   const [displayRequired, setDisplayRequired] = useState("hidden");
   const [redBorder, setRedBorder] = useState("border-[#d6d9e6]");
+  const optionsCountries = useMemo(() => countryList().getData(), []);
+
+  const changeHandler = (selectedOption) => {
+    onChangeYourInfo({ target: { name, value: selectedOption.label } });
+  };
+
+  const phoneChangeHandler = (phoneValue) => {
+    onChangeYourInfo({ target: { name, value: phoneValue } });
+  };
 
   useEffect(() => {
-    if (isEmpty === true) {
+    if (isEmpty) {
       setDisplayRequired("block");
       setRedBorder("border-[#ed3548]");
     } else {
@@ -65,6 +72,21 @@ export default function FormField({
               </option>
             ))}
           </select>
+        ) : type === "country" ? (
+          <Select
+            options={optionsCountries}
+            value={optionsCountries.find((option) => option.value === value)}
+            onChange={changeHandler}
+            isDisabled={disabled}
+          />
+        ) : type === "phone" ? (
+          <PhoneInput
+            country={"in"} // Set a default country
+            value={value}
+            onChange={phoneChangeHandler}
+            disabled={disabled}
+            inputClass={`font-medium max-w-full mt-1 py-4 p-2 pl-3 rounded-lg border ${redBorder} text-[#02295a] text-[15px]`}
+          />
         ) : (
           <input
             onChange={onChangeYourInfo}

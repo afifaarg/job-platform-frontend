@@ -100,7 +100,7 @@ export default function ProfessionalInfo({
     onChangeYourInfo({
       target: {
         name,
-        value: value == "Yes" ? true : false, // Convert "Yes" to true, "No" to false
+        value: value === "Yes", // Convert "Yes" to true, "No" to false
       },
     });
   };
@@ -127,13 +127,7 @@ export default function ProfessionalInfo({
           {/* Map over formFields to render FormField components */}
           {formFields.map((formField) => (
             <FormField
-              onChangeYourInfo={
-                formField.type === "select"
-                  ? (e) => handleSelectChange(formField.name, e.target.value)
-                  : formField.type === "number"
-                  ? (e) => handleNumericChange(formField.name, e.target.value)
-                  : onChangeYourInfo
-              }
+              onChangeYourInfo={onChangeYourInfo}
               key={formField.id} // Unique key for each form field
               name={formField.name} // Field name
               label={formField.label} // Field label

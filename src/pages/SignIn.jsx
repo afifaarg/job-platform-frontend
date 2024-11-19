@@ -14,7 +14,7 @@ export default function SignIn() {
 
     axios
       .post(
-        "https://job-platform-api-1.onrender.com/backendAPI/login/",
+        "http://127.0.0.1:8000/backendAPI/login/",
         {
           username: username,
           password: password,
@@ -28,6 +28,8 @@ export default function SignIn() {
           const userData = response.data.user_data;
           if (userData) {
             localStorage.setItem("userID", userData.id);
+            localStorage.setItem("userPhone", userData.phone);
+            localStorage.setItem("userEmail", userData.email);
             localStorage.setItem("access", response.data.access);
             localStorage.setItem("refresh", response.data.refresh);
 

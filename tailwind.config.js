@@ -8,9 +8,9 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#0866FF', // Main blue
-          light: '#5A96FF',   // Lighter blue for hover or accents
-          dark: '#033D9A',    // Darker blue for contrast
+          DEFAULT: '#000066', // Main blue
+          light: '#000066',   // Lighter blue for hover or accents
+          dark: '#000066',    // Darker blue for contrast
         },
         secondary: {
           DEFAULT: '#F3F4F6', // Light gray background

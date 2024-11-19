@@ -10,13 +10,15 @@ import ProfileComponent from "./pages/ProfilePage";
 import { Privateroute } from "./components/Privateroute";
 import AdminDashboard from "./pages/AdminDashboard";
 import comingSoon from "./pages/Comingsoon";
+import RegisterUser from "./pages/RegisterUser";
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
-          <Route path="/SignUp" element={<Signup />} />
+          <Route path="/SignUp" element={<RegisterUser />} />
+          <Route path="/fillProfile" element={<Signup />} />
           {/* Protected route */}
           <Route
             path="/Landed"

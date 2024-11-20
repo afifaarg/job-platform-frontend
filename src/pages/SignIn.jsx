@@ -7,10 +7,12 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // State to track loading
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true); // Start loading
 
     axios
       .post(
@@ -51,6 +53,9 @@ export default function SignIn() {
       })
       .catch((error) => {
         setError("Invalid credentials. Please try again.");
+      })
+      .finally(() => {
+        setIsLoading(false); // Stop loading
       });
   };
 
@@ -105,8 +110,35 @@ export default function SignIn() {
             <button
               type="submit"
               className="w-full p-3 mt-5 font-bold text-[#000066] border-2 border-[#000066] rounded-lg transition duration-300 hover:bg-[#000066] hover:text-white"
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? (
+                <span className="flex justify-center items-center text-primary hover:text-white">
+                  <svg
+                    className="animate-spin h-5 w-5 mr-2 "
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8h8a8 8 0 01-16 0z"
+                    ></path>
+                  </svg>
+                  Loading...
+                </span>
+              ) : (
+                "Login"
+              )}
             </button>
             <a href="#" className="block mt-3 text-sm text-[#000066]">
               Forgot Password?

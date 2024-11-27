@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Bar, Line, Doughnut } from "react-chartjs-2";
+import axios from "axios";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -223,8 +224,30 @@ export default function DashboardGeneral() {
   const [organizations, setOrganizations] = useState(orgsData);
   const [activeTabDashbaord, setActiveTabDashbaord] = useState(1);
   useEffect(() => {
+    axios
+      .post(
+        "http://job-platform-api-1.onrender.com/backendAPI/fetchUsersList/",
+
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          const userData = response.data.user_data;
+          setUsers(userData);
+          console.log(userData);
+          localStorage.setItem(
+            "allUsers",
+            JSON.stringify(response.data.user_data.all_users)
+          );
+        }
+      })
+      .catch((error) => {
+        alert("Invalid credentials. Please try again.");
+      });
+
     const storedUsers = JSON.parse(localStorage.getItem("allUsers")) || [];
-    setUsers(storedUsers);
   }, []);
 
   // Calculate stats

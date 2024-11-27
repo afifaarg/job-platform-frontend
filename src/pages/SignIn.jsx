@@ -16,7 +16,7 @@ export default function SignIn() {
 
     axios
       .post(
-        "https://job-platform-api-1.onrender.com/backendAPI/login/",
+        "http://job-platform-api-1.onrender.com/backendAPI/login/",
         {
           username: username,
           password: password,
@@ -37,10 +37,7 @@ export default function SignIn() {
 
             if (userData.role === "admin") {
               localStorage.setItem("userRole", "admin");
-              localStorage.setItem(
-                "allUsers",
-                JSON.stringify(response.data.user_data.all_users)
-              );
+
               navigate("/adminDashboard");
             } else {
               localStorage.setItem("userRole", "employee");

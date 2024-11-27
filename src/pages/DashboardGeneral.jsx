@@ -226,11 +226,7 @@ export default function DashboardGeneral() {
   useEffect(() => {
     axios
       .post(
-        "https://job-platform-api-1.onrender.com/backendAPI/fetchUsersList/",
-
-        {
-          headers: { "Content-Type": "application/json" },
-        }
+        "https://job-platform-api-1.onrender.com/backendAPI/fetchUsersList/"
       )
       .then((response) => {
         if (response.status === 200) {

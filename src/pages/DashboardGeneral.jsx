@@ -225,8 +225,11 @@ export default function DashboardGeneral() {
   const [activeTabDashbaord, setActiveTabDashbaord] = useState(1);
   useEffect(() => {
     axios
-      .post(
-        "https://job-platform-api-1.onrender.com/backendAPI/fetchUsersList/"
+      .get(
+        "https://job-platform-api-1.onrender.com/backendAPI/fetchUsersList/",
+        {
+          headers: { "Content-Type": "application/json" },
+        }
       )
       .then((response) => {
         if (response.status === 200) {

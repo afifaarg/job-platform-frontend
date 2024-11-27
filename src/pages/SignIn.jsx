@@ -16,7 +16,7 @@ export default function SignIn() {
 
     axios
       .post(
-        "http://job-platform-api-1.onrender.com/backendAPI/login/",
+        "https://job-platform-api-1.onrender.com/backendAPI/login/",
         {
           username: username,
           password: password,
